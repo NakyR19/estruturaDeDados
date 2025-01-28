@@ -21,6 +21,11 @@ typedef struct
     int quant;
 } tipoListaCircular;
 
+void limparBufferEntrada() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 void inicializarLista(tipoListaCircular *lista)
 {
     lista->fim = NULL;
@@ -126,7 +131,7 @@ int main()
 {
     int resp, op;
     Pessoa pessoa;
-    tipoListaCircular *lista;
+    tipoListaCircular *lista = (tipoListaCircular *)malloc(sizeof(tipoListaCircular));
     inicializarLista(lista);
 
     do
@@ -139,10 +144,9 @@ int main()
         {
         case 1:
             printf("\nDigite o nome do participante: \n");
-            fflush(stdin);
+            limparBufferEntrada();
             fgets(pessoa.nome, 50, stdin);
             printf("Digite o CPF do participante: \n");
-            fflush(stdin);
             fgets(pessoa.cpf, 12, stdin);
             resp = inserirPessoa(lista, pessoa);
             if (resp)
