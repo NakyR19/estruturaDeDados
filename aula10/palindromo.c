@@ -4,7 +4,7 @@
 
 typedef struct no
 {
-    int dado;
+    char dado[100];
     struct no *proxNo;
 } tipoNo;
 
@@ -15,6 +15,11 @@ typedef struct
     int quant;
 } tipoLista;
 
+void limparBufferEntrada() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 void inicializa(tipoLista *lista)
 {
     lista->inicio = NULL;
@@ -22,7 +27,7 @@ void inicializa(tipoLista *lista)
     lista->quant = 0;
 }
 
-int insereListaVazia(tipoLista *lista, int valor)
+int insereListaVazia(tipoLista *lista, char* valor)
 {
     tipoNo *novoNo = (tipoNo *)malloc(sizeof(tipoNo));
     if (novoNo == NULL)
@@ -126,36 +131,6 @@ int converteBinario(tipoLista *lista)
         }
     }
     printf("\nO resultado da conversão foi:");
-    exibeLista(listaAux);
-    return 1;
-}
-
-int converteOctal(tipoLista *lista)
-{
-
-    tipoLista *listaAux = (tipoLista *)malloc(sizeof(tipoLista));
-    inicializa(listaAux);
-
-    if (!lista->inicio)
-        return 0;
-    int num = lista->inicio->dado;
-    printf("O numero convertido foi: %d", num);
-    removerNaFrente(lista);
-
-    if (num < 8)
-    {
-        printf("O resultado da conversão foi: %d", num);
-        return num;
-    }
-
-    while (num >= 8)
-    {
-        int resto = num % 8; 
-        num /= 8;
-        insereNaFrente(listaAux, resto);
-    }
-    insereNaFrente(listaAux, num);
-    printf("\nO resultado da conversao foi:");
     exibeLista(listaAux);
     return 1;
 }
